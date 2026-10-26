@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>My Idea Brain</title><style>
+
+:root { --ink:#171817; --paper:#f6f3ed; --cream:#fffdfa; --lime:#dfff57; --purple:#7b50e8; --line:#d8d2c8; --muted:#706e68; }
+* { box-sizing:border-box; }
+html { background:var(--paper); scroll-behavior:smooth; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:Arial,Helvetica,sans-serif; }
+button,input,select,textarea { font:inherit; }
+button { cursor:pointer; }
+.topbar { height:74px; padding:0 clamp(20px,5vw,72px); display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); background:rgba(246,243,237,.94); position:sticky; top:0; z-index:20; backdrop-filter:blur(10px); }
+.brand { color:var(--ink); text-decoration:none; font-weight:800; font-size:20px; letter-spacing:-.03em; display:flex; align-items:center; gap:10px; }
+.brand span { display:grid; place-items:center; width:30px; height:30px; background:var(--purple); color:white; border-radius:9px; transform:rotate(-6deg); }
+.primary,.secondary { border:1px solid var(--ink); border-radius:12px; padding:13px 18px; font-weight:800; box-shadow:3px 3px 0 var(--ink); transition:.15s ease; }
+.primary { background:var(--lime); color:var(--ink); }
+.secondary { background:white; }
+.primary:hover,.secondary:hover { transform:translate(-1px,-1px); box-shadow:5px 5px 0 var(--ink); }
+.primary:disabled { opacity:.6; }
+.small { padding:10px 14px; }
+.hero { min-height:350px; padding:70px clamp(20px,7vw,100px) 62px; display:flex; align-items:flex-end; justify-content:space-between; gap:40px; border-bottom:1px solid var(--line); background:radial-gradient(circle at 82% 28%,rgba(123,80,232,.14),transparent 24%),radial-gradient(circle at 72% 88%,rgba(223,255,87,.55),transparent 26%); }
+.eyebrow { margin:0 0 15px; font-size:12px; font-weight:900; text-transform:uppercase; letter-spacing:.15em; color:var(--purple); }
+.hero h1 { max-width:820px; margin:0; font-size:clamp(46px,7vw,92px); line-height:.94; letter-spacing:-.07em; }
+.hero h1 span { color:var(--purple); }
+.lede { max-width:630px; margin:24px 0 0; color:var(--muted); font-size:18px; line-height:1.55; }
+.heroButton { flex:0 0 auto; display:flex; align-items:center; gap:25px; }
+.heroButton span { font-size:22px; }
+.controls { padding:24px clamp(20px,5vw,72px); display:grid; grid-template-columns:minmax(220px,1fr) 190px 160px auto; gap:12px; align-items:center; border-bottom:1px solid var(--line); }
+.search { display:flex; align-items:center; gap:8px; background:var(--cream); border:1px solid var(--line); border-radius:12px; padding:0 14px; }
+.search span { font-size:24px; }
+.search input { width:100%; border:0; outline:0; padding:13px 4px; background:transparent; }
+.controls select,.modal select,.modal input,.modal textarea { width:100%; border:1px solid var(--line); background:var(--cream); border-radius:12px; padding:13px 14px; color:var(--ink); outline:none; }
+.controls select:focus,.modal select:focus,.modal input:focus,.modal textarea:focus { border-color:var(--purple); box-shadow:0 0 0 3px rgba(123,80,232,.14); }
+.count { text-align:right; display:flex; flex-direction:column; }
+.count strong { font-size:24px; line-height:1; }
+.count span { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; }
+.notice { margin:20px clamp(20px,5vw,72px) 0; padding:12px 16px; background:#ece5ff; border:1px solid #c9b7fb; border-radius:10px; }
+.ideaGrid { padding:32px clamp(20px,5vw,72px) 80px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+.ideaCard { min-height:310px; display:flex; flex-direction:column; background:var(--cream); border:1px solid var(--line); border-radius:18px; padding:22px; box-shadow:0 6px 0 rgba(23,24,23,.06); transition:.18s ease; }
+.ideaCard:hover { transform:translateY(-3px); box-shadow:0 10px 0 rgba(23,24,23,.08); border-color:#b7aea0; }
+.cardTop { display:flex; justify-content:space-between; align-items:center; }
+.more { border:0; background:transparent; font-weight:900; letter-spacing:.08em; }
+.priority { font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; padding:6px 8px; border-radius:7px; background:#ece8e0; }
+.pdothis { background:#ff8fa3; }
+.pjuicy { background:var(--lime); }
+.pgood { background:#cfc2fb; }
+.category { margin:24px 0 8px; color:var(--purple); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.12em; }
+.ideaCard h2 { margin:0; font-size:24px; letter-spacing:-.035em; line-height:1.08; }
+.description { margin:13px 0 18px; color:var(--muted); line-height:1.5; font-size:14px; white-space:pre-wrap; }
+.home { margin:auto 0 12px; font-size:13px; }
+.home span { color:var(--muted); margin-right:5px; }
+.tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:15px; }
+.tags span { font-size:11px; padding:5px 8px; border-radius:99px; border:1px solid var(--line); background:#f4f0e8; }
+.cardFooter { border-top:1px solid var(--line); padding-top:14px; display:flex; align-items:center; justify-content:space-between; font-size:12px; color:var(--muted); }
+.cardFooter button { border:0; background:transparent; color:var(--muted); text-decoration:underline; }
+.statusDot { display:flex; align-items:center; gap:7px; }
+.statusDot i { display:block; width:8px; height:8px; border-radius:50%; background:#aaa; }
+.statusDot i.inprogress,.statusDot i.nextup { background:var(--purple); }
+.statusDot i.built { background:#68ac32; }
+.empty { grid-column:1/-1; min-height:240px; border:1px dashed #bdb6aa; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--muted); }
+.empty strong { color:var(--ink); font-size:20px; }
+.modalBack { position:fixed; inset:0; z-index:50; background:rgba(23,24,23,.52); display:grid; place-items:center; padding:20px; }
+.modal { width:min(680px,100%); max-height:92vh; overflow:auto; background:var(--paper); border:2px solid var(--ink); border-radius:20px; box-shadow:8px 8px 0 var(--ink); padding:28px; }
+.modalHead { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; margin-bottom:24px; }
+.modalHead h2 { margin:0; font-size:32px; letter-spacing:-.045em; }
+.close { width:38px; height:38px; border:1px solid var(--ink); border-radius:10px; background:white; font-size:28px; line-height:1; }
+.modal form { display:flex; flex-direction:column; gap:16px; }
+.modal label { display:flex; flex-direction:column; gap:7px; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }
+.modal textarea { resize:vertical; min-height:100px; }
+.modal small { color:var(--muted); font-weight:400; text-transform:none; letter-spacing:0; }
+.formGrid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.actions { display:flex; justify-content:flex-end; gap:12px; padding-top:8px; }
+@media(max-width:900px){.hero{align-items:flex-start;flex-direction:column}.heroButton{align-self:flex-start}.controls{grid-template-columns:1fr 1fr}.search{grid-column:1/-1}.count{text-align:left}.ideaGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.topbar{height:66px}.brand{font-size:17px}.small{font-size:0}.small:after{content:"+ Idea";font-size:14px}.hero{padding-top:48px}.hero h1{font-size:50px}.controls{grid-template-columns:1fr}.search{grid-column:auto}.count{display:none}.ideaGrid{grid-template-columns:1fr}.formGrid{grid-template-columns:1fr}.modal{padding:22px}.modalHead h2{font-size:27px}}
+
+[hidden] { display:none !important; }
+</style></head><body><main>
+<header class="topbar"><a class="brand" href="#top"><span>✦</span> <b id="brandName">Your Idea Brain</b></a><button class="primary small" id="newTop">+ Catch an idea</button></header>
+<section class="hero" id="top"><div><p class="eyebrow">Your business brain’s external hard drive</p><h1>Put every good idea somewhere <span>findable.</span></h1><p class="lede">Dump it here now. Decide whether it’s genius, nonsense or a raccoon holding a glue gun later.</p></div><button class="primary heroButton" id="newHero">Catch a new idea <span>↗</span></button></section>
+<section class="controls" aria-label="Idea filters"><label class="search"><span>⌕</span><input id="search" placeholder="Search every thought…" aria-label="Search every thought"></label><select id="categoryFilter" aria-label="Filter by category"></select><select id="statusFilter" aria-label="Filter by status"></select><div class="count"><strong id="count">0</strong><span id="countLabel">ideas</span></div></section>
+<div id="notice" class="notice" role="status" hidden></div><section class="ideaGrid" id="grid" aria-live="polite"></section>
+<div class="modalBack" id="back" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="formTitle"><div class="modalHead"><div><p class="eyebrow">Quick capture</p><h2 id="formTitle">Catch it before it bolts</h2></div><button class="close" id="close" type="button" aria-label="Close">×</button></div>
+<form id="form"><label>Idea name<input id="title" required placeholder="What’s the idea?"></label><label>Notes<textarea id="description" placeholder="Enough context that Future You won’t be confused…" rows="4"></textarea></label><div class="formGrid"><label>Category<select id="category"></select></label><label>Status<select id="status"></select></label><label>Priority<select id="priority"></select></label><label>Where it belongs<input id="home" placeholder="Course, site, brand…"></label></div><label>Tags<input id="tags" placeholder="AI, student tool, recurring"><small>Separate tags with commas.</small></label><label>Where it came from<input id="source" placeholder="Conversation, student question, shower prophecy…"></label><div class="actions"><button type="button" class="secondary" id="cancel">Cancel</button><button class="primary" id="save">Save idea</button></div></form></section></div></main>
+<script>
+// CHANGE THIS NAME to personalise the page before sharing it.
+const YOUR_NAME = "Your";
+const categories = ["Inbox", "Content", "Tools and builds", "Existing courses", "New offers", "Community", "Email and social", "Research", "Operations", "Personal"];
+const statuses = ["Saved", "Thinking", "Next up", "In progress", "Built", "Archived"];
+const priorities = ["Maybe", "Good", "Juicy", "Do this"];
+const key = "idea-brain-personal-v1";
+const $ = id => document.getElementById(id);
+const name = YOUR_NAME.trim() || "Your";
+const possessive = name.toLowerCase() === "your" ? "Your" : name + (name.endsWith("s") ? "’" : "’s");
+$("brandName").textContent = possessive + " Idea Brain";
+document.title = possessive + " Idea Brain";
+$("description").placeholder = `Enough context that Future ${name === "Your" ? "You" : name} won’t be confused…`;
+function options(el, list) { list.forEach(value => { const o=document.createElement("option"); o.textContent=value; el.appendChild(o); }); }
+options($("categoryFilter"), ["All ideas", ...categories]); options($("statusFilter"), ["Active", "All statuses", ...statuses]); options($("category"), categories); options($("status"), statuses); options($("priority"), priorities);
+let ideas=[]; try { const saved=JSON.parse(localStorage.getItem(key) || "[]"); if(Array.isArray(saved)) ideas=saved; } catch(e) { showNotice("Your saved ideas couldn’t be opened in this browser."); }
+let editing=null;
+function showNotice(message){ $("notice").textContent=message; $("notice").hidden=false; }
+function persist(){ try { localStorage.setItem(key, JSON.stringify(ideas)); return true; } catch(e) { showNotice("That didn’t save. Browser storage may be unavailable."); return false; } }
+function el(tag, cls, text){ const node=document.createElement(tag); if(cls) node.className=cls; if(text != null) node.textContent=text; return node; }
+function render(){ const term=$("search").value.toLowerCase().trim(), cat=$("categoryFilter").value, stat=$("statusFilter").value;
+ const filtered=ideas.filter(i => (!term || [i.title,i.description,i.tags,i.home,i.source].join(" ").toLowerCase().includes(term)) && (cat==="All ideas" || i.category===cat) && (stat==="All statuses" || (stat==="Active" ? !["Built","Archived"].includes(i.status) : i.status===stat)));
+ $("count").textContent=filtered.length; $("countLabel").textContent=filtered.length===1?"idea":"ideas"; $("grid").replaceChildren();
+ if(!filtered.length){const empty=el("div","empty");empty.append(el("strong",null,"No ideas hiding here."),el("span",null,"Try another filter or catch a fresh one."));$("grid").append(empty);return;}
+ for(const idea of filtered){ const card=el("article","ideaCard"), top=el("div","cardTop"), more=el("button","more","•••"); more.setAttribute("aria-label",`Edit ${idea.title}`); more.onclick=()=>openForm(idea); top.append(el("span","priority p"+idea.priority.replaceAll(" ","").toLowerCase(),idea.priority),more); card.append(top,el("p","category",idea.category),el("h2",null,idea.title),el("p","description",idea.description || "No notes yet. Suspiciously mysterious."));
+ if(idea.home){let h=el("p","home");h.append(el("span",null,"Lives in"), document.createTextNode(" "+idea.home));card.append(h);} if(idea.tags){let tags=el("div","tags");idea.tags.split(",").forEach(t=>tags.append(el("span",null,t.trim())));card.append(tags);} const foot=el("div","cardFooter"), status=el("span","statusDot"), dot=el("i",idea.status.replaceAll(" ","").toLowerCase()); status.append(dot,document.createTextNode(idea.status)); const del=el("button",null,"Delete");del.onclick=()=>{if(confirm("Delete this idea for real?")){let old=ideas;ideas=ideas.filter(i=>i.id!==idea.id);if(!persist()) ideas=old;render();}};foot.append(status,del);card.append(foot);$("grid").append(card); }
+}
+function openForm(idea){editing=idea?.id || null;$("form").reset(); for(const field of ["title","description","category","status","priority","home","tags","source"]) if(idea) $(field).value=idea[field] || ""; $("formTitle").textContent=idea?"Edit this idea":"Catch it before it bolts";$("save").textContent=idea?"Save changes":"Save idea";$("back").hidden=false;$("title").focus();}
+function closeForm(){ $("back").hidden=true; }
+$("newTop").onclick=()=>openForm();$("newHero").onclick=()=>openForm();$("close").onclick=closeForm;$("cancel").onclick=closeForm;$("back").onclick=e=>{if(e.target===$("back"))closeForm();};document.addEventListener("keydown",e=>{if(e.key==="Escape")closeForm();});
+$("form").onsubmit=e=>{e.preventDefault();const data={id:editing || (globalThis.crypto?.randomUUID?.() || String(Date.now()))};for(const f of ["title","description","category","status","priority","home","tags","source"]) data[f]=$(f).value; const old=ideas;ideas=editing?ideas.map(i=>i.id===editing?data:i):[data,...ideas]; if(persist()){closeForm();showNotice(editing?"Idea updated.":"Idea caught before it escaped.");}else ideas=old;render();};
+["search","categoryFilter","statusFilter"].forEach(id=>$(id).addEventListener("input",render));render();
+</script></body></html>
